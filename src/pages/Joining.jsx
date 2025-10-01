@@ -340,7 +340,8 @@ const handleJoiningSubmit = async (e) => {
     const uploadPromises = {};
     const fileFields = [
       'aadharFrontPhoto',
-      'bankPassbookPhoto'
+      'bankPassbookPhoto',
+      'salarySlip' 
     ];
 
     for (const field of fileFields) {
@@ -376,7 +377,7 @@ const handleJoiningSubmit = async (e) => {
     
     // Assign values directly to array indices according to specified columns
     rowData[0] = formattedTimestamp;           // Column A: Timestamp
-    rowData[1] = joiningFormData.joiningId;    // Column B: Joining ID
+    rowData[1] = "";
     rowData[2] = joiningFormData.nameAsPerAadhar;   // Column C: Name As Per Aadhar
     rowData[3] = joiningFormData.fatherName;   // Column D: Father Name
     rowData[4] = joiningFormData.dateOfJoining; // Column E: Date Of Joining
@@ -402,6 +403,7 @@ const handleJoiningSubmit = async (e) => {
     rowData[24] = "";
     rowData[25] = "";
     rowData[26] = formattedTimestamp; // Column AA: Actual Date
+    rowData[38] = fileUrls.salarySlip || "";    // Column AM: Last Salary Slip
 
     await postToJoiningSheet(rowData);
 
@@ -536,7 +538,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
           <form onSubmit={handleJoiningSubmit} className="p-4 md:p-6 space-y-6">
             {/* Section 1: Basic Information */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div>
+              {/* <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Joining ID (जॉइनिंग आईडी)
                 </label>
@@ -547,11 +549,11 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   onChange={handleJoiningInputChange}
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
                 />
-              </div>
+              </div> */}
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Name As Per Aadhar (नाम आधार के अनुसार)
+                  Name As Per Aadhar
                 </label>
                 <input
                   type="text"
@@ -564,7 +566,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Father Name (पिता का नाम)
+                  Father Name
                 </label>
                 <input
                   type="text"
@@ -577,7 +579,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Date Of Birth As per Aadhar (आधार के अनुसार जन्मतिथि)
+                  Date Of Birth As per Aadhar
                 </label>
                 <input
                   type="date"
@@ -590,7 +592,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Gender (लिंग)
+                  Gender
                 </label>
                 <select
                   name="gender"
@@ -607,7 +609,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Department (विभाग)
+                  Department
                 </label>
                 <input
                   type="text"
@@ -620,7 +622,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Equipment (उपकरण)
+                  Equipment
                 </label>
                 <input
                   type="text"
@@ -636,7 +638,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Mobile No. (मोबाइल नंबर)
+                  Mobile No.
                 </label>
                 <input
                   type="tel"
@@ -649,7 +651,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Personal Email (व्यक्तिगत ईमेल)
+                  Personal Email
                 </label>
                 <input
                   type="email"
@@ -662,7 +664,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Family Mobile Number (परिवार का मोबाइल नंबर)
+                  Family Mobile Number
                 </label>
                 <input
                   name="familyMobileNo"
@@ -674,7 +676,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Relationship With Family (परिवार के साथ संबंध)
+                  Relationship With Family 
                 </label>
                 <input
                   name="relationshipWithFamily"
@@ -689,7 +691,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Current Address (वर्त्तमान पता)
+                  Current Address 
                 </label>
                 <textarea
                   name="currentAddress"
@@ -705,7 +707,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Date Of Joining (जॉइनिंग की तारीख)
+                  Date Of Joining 
                 </label>
                 <input
                   type="date"
@@ -718,7 +720,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Designation (पद का नाम)
+                  Designation 
                 </label>
                 <input
                   type="text"
@@ -731,7 +733,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Highest Qualification (उच्चतम योग्यता)
+                  Highest Qualification 
                 </label>
                 <input
                   name="highestQualification"
@@ -746,7 +748,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Aadhar Card Number (आधार कार्ड नंबर)
+                  Aadhar Card Number 
                 </label>
                 <input
                   name="aadharCardNo"
@@ -758,7 +760,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Current Bank Account No (बैंक खाता संख्या)
+                  Current Bank Account No 
                 </label>
                 <input
                   name="currentBankAc"
@@ -770,7 +772,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  IFSC Code (आईएफएससी कोड)
+                  IFSC Code 
                 </label>
                 <input
                   name="ifscCode"
@@ -782,7 +784,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Branch Name (शाखा का नाम)
+                  Branch Name 
                 </label>
                 <input
                   name="branchName"
@@ -797,7 +799,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Aadhar Card (आधार कार्ड)
+                  Aadhar Card 
                 </label>
                 <div className="flex items-center space-x-2">
                   <input
@@ -824,7 +826,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Photo Of Front Bank Passbook (बैंक पासबुक का फोटो)
+                  Photo Of Front Bank Passbook 
                 </label>
                 <div className="flex items-center space-x-2">
                   <input
@@ -848,6 +850,32 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   )}
                 </div>
               </div>
+              <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Last Salary Slip
+                  </label>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="file"
+                      accept="image/*,.pdf"
+                      onChange={(e) => handleFileChange(e, "salarySlip")}
+                      className="hidden"
+                      id="salary-slip-upload"
+                    />
+                    <label
+                      htmlFor="salary-slip-upload"
+                      className="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50 text-gray-700"
+                    >
+                      <Upload size={16} className="mr-2" />
+                      Upload Salary Slip
+                    </label>
+                    {joiningFormData.salarySlip && (
+                      <span className="text-sm text-gray-700">
+                        {joiningFormData.salarySlip.name}
+                      </span>
+                    )}
+                  </div>
+                </div>
             </div>
 
             {/* Auto-filled candidate data display */}
