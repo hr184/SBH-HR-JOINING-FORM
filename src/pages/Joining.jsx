@@ -21,7 +21,7 @@ const JoiningForm = () => {
     salary: '',
     aadharFrontPhoto: null,
     aadharBackPhoto: null,
-    panCard: null,
+    panCardNumber: '',
     candidatePhoto: null,
     currentAddress: '',
     addressAsPerAadhar: '',
@@ -404,6 +404,7 @@ const handleJoiningSubmit = async (e) => {
     rowData[25] = "";
     rowData[26] = formattedTimestamp; // Column AA: Actual Date
     rowData[38] = fileUrls.salarySlip || "";    // Column AM: Last Salary Slip
+    rowData[40] = joiningFormData.panCardNumber;
 
     await postToJoiningSheet(rowData);
 
@@ -454,7 +455,7 @@ const handleJoiningSubmit = async (e) => {
       salary: '',
       aadharFrontPhoto: null,
       aadharBackPhoto: null,
-      panCard: null,
+      panCardNumber: '',
       candidatePhoto: null,
       currentAddress: '',
       addressAsPerAadhar: '',
@@ -513,7 +514,9 @@ const filteredEnquiryData = enquiryData.filter(item => {
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           <div className="flex justify-between items-center p-4 md:p-6 border-b border-gray-300 bg-indigo-700 text-white">
-            <h1 className="text-xl md:text-2xl font-bold">Employee Joining Form</h1>
+            <h1 className="text-xl md:text-2xl font-bold">
+              Employee Joining Form
+            </h1>
             <button
               onClick={() => setShowJoiningModal(false)}
               className="text-white hover:text-gray-200"
@@ -527,14 +530,21 @@ const filteredEnquiryData = enquiryData.filter(item => {
             <div className="p-4 bg-blue-50 border-b border-gray-200">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-sm font-medium text-blue-900">Selected Candidate:</p>
-                  <p className="text-lg font-semibold text-blue-800">{selectedCandidate.candidateName}</p>
-                  <p className="text-sm text-blue-700">{selectedCandidate.applyingForPost} - {selectedCandidate.department}</p>
+                  <p className="text-sm font-medium text-blue-900">
+                    Selected Candidate:
+                  </p>
+                  <p className="text-lg font-semibold text-blue-800">
+                    {selectedCandidate.candidateName}
+                  </p>
+                  <p className="text-sm text-blue-700">
+                    {selectedCandidate.applyingForPost} -{" "}
+                    {selectedCandidate.department}
+                  </p>
                 </div>
               </div>
             </div>
           )}
-          
+
           <form onSubmit={handleJoiningSubmit} className="p-4 md:p-6 space-y-6">
             {/* Section 1: Basic Information */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -563,7 +573,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Father Name
@@ -576,7 +586,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Date Of Birth As per Aadhar
@@ -589,7 +599,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Gender
@@ -606,7 +616,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   <option value="Other">Other</option>
                 </select>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Department
@@ -619,7 +629,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Equipment
@@ -648,7 +658,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Personal Email
@@ -661,7 +671,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Family Mobile Number
@@ -673,10 +683,10 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Relationship With Family 
+                  Relationship With Family
                 </label>
                 <input
                   name="relationshipWithFamily"
@@ -691,7 +701,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Current Address 
+                  Current Address
                 </label>
                 <textarea
                   name="currentAddress"
@@ -707,7 +717,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Date Of Joining 
+                  Date Of Joining
                 </label>
                 <input
                   type="date"
@@ -717,10 +727,10 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Designation 
+                  Designation
                 </label>
                 <input
                   type="text"
@@ -730,10 +740,10 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Highest Qualification 
+                  Highest Qualification
                 </label>
                 <input
                   name="highestQualification"
@@ -748,7 +758,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Aadhar Card Number 
+                  Aadhar Card Number
                 </label>
                 <input
                   name="aadharCardNo"
@@ -757,10 +767,22 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Current Bank Account No 
+                  Pan Card Number
+                </label>
+                <input
+                  name="panCardNumber"
+                  value={joiningFormData.panCardNumber || ""} // Ensure it's never null
+                  onChange={handleJoiningInputChange}
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Current Bank Account No
                 </label>
                 <input
                   name="currentBankAc"
@@ -769,10 +791,10 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  IFSC Code 
+                  IFSC Code
                 </label>
                 <input
                   name="ifscCode"
@@ -781,10 +803,10 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Branch Name 
+                  Branch Name
                 </label>
                 <input
                   name="branchName"
@@ -799,7 +821,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Aadhar Card 
+                  Aadhar Card
                 </label>
                 <div className="flex items-center space-x-2">
                   <input
@@ -823,10 +845,10 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   )}
                 </div>
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Photo Of Front Bank Passbook 
+                  Photo Of Front Bank Passbook
                 </label>
                 <div className="flex items-center space-x-2">
                   <input
@@ -851,37 +873,39 @@ const filteredEnquiryData = enquiryData.filter(item => {
                 </div>
               </div>
               <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    Last Salary Slip
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Last Salary Slip
+                </label>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="file"
+                    accept="image/*,.pdf"
+                    onChange={(e) => handleFileChange(e, "salarySlip")}
+                    className="hidden"
+                    id="salary-slip-upload"
+                  />
+                  <label
+                    htmlFor="salary-slip-upload"
+                    className="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50 text-gray-700"
+                  >
+                    <Upload size={16} className="mr-2" />
+                    Upload Salary Slip
                   </label>
-                  <div className="flex items-center space-x-2">
-                    <input
-                      type="file"
-                      accept="image/*,.pdf"
-                      onChange={(e) => handleFileChange(e, "salarySlip")}
-                      className="hidden"
-                      id="salary-slip-upload"
-                    />
-                    <label
-                      htmlFor="salary-slip-upload"
-                      className="flex items-center px-4 py-2 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50 text-gray-700"
-                    >
-                      <Upload size={16} className="mr-2" />
-                      Upload Salary Slip
-                    </label>
-                    {joiningFormData.salarySlip && (
-                      <span className="text-sm text-gray-700">
-                        {joiningFormData.salarySlip.name}
-                      </span>
-                    )}
-                  </div>
+                  {joiningFormData.salarySlip && (
+                    <span className="text-sm text-gray-700">
+                      {joiningFormData.salarySlip.name}
+                    </span>
+                  )}
                 </div>
+              </div>
             </div>
 
             {/* Auto-filled candidate data display */}
             {selectedCandidate && (
               <div className="border-t pt-6">
-                <h3 className="text-lg font-medium text-gray-900 mb-4">Auto-filled from Selected Candidate</h3>
+                <h3 className="text-lg font-medium text-gray-900 mb-4">
+                  Auto-filled from Selected Candidate
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-4 rounded-lg">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -897,10 +921,12 @@ const filteredEnquiryData = enquiryData.filter(item => {
                         View Photo
                       </a>
                     ) : (
-                      <span className="text-sm text-gray-500">Not available</span>
+                      <span className="text-sm text-gray-500">
+                        Not available
+                      </span>
                     )}
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Candidate Resume
@@ -915,7 +941,9 @@ const filteredEnquiryData = enquiryData.filter(item => {
                         View Resume
                       </a>
                     ) : (
-                      <span className="text-sm text-gray-500">Not available</span>
+                      <span className="text-sm text-gray-500">
+                        Not available
+                      </span>
                     )}
                   </div>
                 </div>
