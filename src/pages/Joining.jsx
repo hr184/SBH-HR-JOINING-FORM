@@ -10,6 +10,7 @@ const JoiningForm = () => {
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [showCandidateList, setShowCandidateList] = useState(true);
+  const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
   
   const [joiningFormData, setJoiningFormData] = useState({
     joiningId: '',
@@ -59,7 +60,7 @@ const fetchEnquiryData = async () => {
     setLoading(true);
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbxmXLxCqjFY9yRDLoYEjqU9LTcpfV7r9ueBuOsDsREkdGknbdE_CZBW7ZHTdP3n0NzOfQ/exec?sheet=ENQUIRY&action=fetch"
+        "https://script.google.com/macros/s/AKfycbwZ96aXBp4sNGMzHjLf1iq98Pj1u6agtAb02Qv2KvdYYf7bzqrXAxWRxJ2LJIXVyN453g/exec?sheet=ENQUIRY&action=fetch"
       );
 
       if (!response.ok) {
@@ -211,7 +212,7 @@ const fetchEnquiryData = async () => {
   };
 
   const postToJoiningSheet = async (rowData) => {
-    const URL = 'https://script.google.com/macros/s/AKfycbxmXLxCqjFY9yRDLoYEjqU9LTcpfV7r9ueBuOsDsREkdGknbdE_CZBW7ZHTdP3n0NzOfQ/exec';
+    const URL = 'https://script.google.com/macros/s/AKfycbwZ96aXBp4sNGMzHjLf1iq98Pj1u6agtAb02Qv2KvdYYf7bzqrXAxWRxJ2LJIXVyN453g/exec';
 
     try {
       console.log('Attempting to post:', {
@@ -256,7 +257,7 @@ const fetchEnquiryData = async () => {
     }
   };
 
-  const uploadFileToDrive = async (file, folderId = '1zYLVLGQfuCUyEzLfyJWM7o67kN3JBQMs') => {
+  const uploadFileToDrive = async (file, folderId = '1gaY4NC7C1tK7vOoL2VKV90Cc8cks1EQ3') => {
     try {
       const reader = new FileReader();
       const base64Data = await new Promise((resolve, reject) => {
@@ -273,7 +274,7 @@ const fetchEnquiryData = async () => {
       params.append('folderId', folderId);
 
       const response = await fetch(
-        'https://script.google.com/macros/s/AKfycbxmXLxCqjFY9yRDLoYEjqU9LTcpfV7r9ueBuOsDsREkdGknbdE_CZBW7ZHTdP3n0NzOfQ/exec',
+        'https://script.google.com/macros/s/AKfycbwZ96aXBp4sNGMzHjLf1iq98Pj1u6agtAb02Qv2KvdYYf7bzqrXAxWRxJ2LJIXVyN453g/exec',
         {
           method: 'POST',
           headers: {
@@ -302,7 +303,7 @@ const fetchEnquiryData = async () => {
   };
 
 const updateEnquirySheet = async (enquiryNo, timestamp) => {
-  const URL = 'https://script.google.com/macros/s/AKfycbxmXLxCqjFY9yRDLoYEjqU9LTcpfV7r9ueBuOsDsREkdGknbdE_CZBW7ZHTdP3n0NzOfQ/exec';
+  const URL = 'https://script.google.com/macros/s/AKfycbwZ96aXBp4sNGMzHjLf1iq98Pj1u6agtAb02Qv2KvdYYf7bzqrXAxWRxJ2LJIXVyN453g/exec';
 
   try {
     const params = new URLSearchParams();
@@ -418,7 +419,7 @@ const handleJoiningSubmit = async (e) => {
       updateParams.append('timestamp', formattedTimestamp);
 
       const updateResponse = await fetch(
-        'https://script.google.com/macros/s/AKfycbxmXLxCqjFY9yRDLoYEjqU9LTcpfV7r9ueBuOsDsREkdGknbdE_CZBW7ZHTdP3n0NzOfQ/exec',
+        'https://script.google.com/macros/s/AKfycbwZ96aXBp4sNGMzHjLf1iq98Pj1u6agtAb02Qv2KvdYYf7bzqrXAxWRxJ2LJIXVyN453g/exec',
         {
           method: 'POST',
           headers: {
@@ -439,56 +440,61 @@ const handleJoiningSubmit = async (e) => {
       }
     }
 
-    console.log("Joining Form Data:", rowData);
+ console.log("Joining Form Data:", rowData);
 
-    toast.success('Employee added successfully!');
-    setShowJoiningModal(false);
+    // Show success animation
+    setShowSuccessAnimation(true);
     
-    // Reset form
-    setJoiningFormData({
-      joiningId: '',
-      nameAsPerAadhar: '',
-      fatherName: '',
-      dateOfJoining: '',
-      joiningPlace: '',
-      designation: '',
-      salary: '',
-      aadharFrontPhoto: null,
-      aadharBackPhoto: null,
-      panCardNumber: '',
-      candidatePhoto: null,
-      currentAddress: '',
-      addressAsPerAadhar: '',
-      dobAsPerAadhar: '',
-      gender: '',
-      mobileNo: '',
-      familyMobileNo: '',
-      relationshipWithFamily: '',
-      pastPfId: '',
-      currentBankAc: '',
-      ifscCode: '',
-      branchName: '',
-      bankPassbookPhoto: null,
-      personalEmail: '',
-      esicNo: '',
-      highestQualification: '',
-      pfEligible: '',
-      esicEligible: '',
-      joiningCompanyName: '',
-      emailToBeIssue: '',
-      issueMobile: '',
-      issueLaptop: '',
-      aadharCardNo: '',
-      modeOfAttendance: '',
-      qualificationPhoto: null,
-      paymentMode: '',
-      salarySlip: null,
-      resumeCopy: null,
-      department: '',
-      equipment: ''
-    });
-    setSelectedCandidate(null);
-    setShowCandidateList(true);
+    // Reset form and close modal after animation
+    setTimeout(() => {
+      toast.success('Employee added successfully!');
+      setShowJoiningModal(false);
+      
+      setJoiningFormData({
+        joiningId: '',
+        nameAsPerAadhar: '',
+        fatherName: '',
+        dateOfJoining: '',
+        joiningPlace: '',
+        designation: '',
+        salary: '',
+        aadharFrontPhoto: null,
+        aadharBackPhoto: null,
+        panCardNumber: '',
+        candidatePhoto: null,
+        currentAddress: '',
+        addressAsPerAadhar: '',
+        dobAsPerAadhar: '',
+        gender: '',
+        mobileNo: '',
+        familyMobileNo: '',
+        relationshipWithFamily: '',
+        pastPfId: '',
+        currentBankAc: '',
+        ifscCode: '',
+        branchName: '',
+        bankPassbookPhoto: null,
+        personalEmail: '',
+        esicNo: '',
+        highestQualification: '',
+        pfEligible: '',
+        esicEligible: '',
+        joiningCompanyName: '',
+        emailToBeIssue: '',
+        issueMobile: '',
+        issueLaptop: '',
+        aadharCardNo: '',
+        modeOfAttendance: '',
+        qualificationPhoto: null,
+        paymentMode: '',
+        salarySlip: null,
+        resumeCopy: null,
+        department: '',
+        equipment: ''
+      });
+      setSelectedCandidate(null);
+      setShowCandidateList(true);
+    }, 2500);
   } catch (error) {
     console.error('Error submitting joining form:', error);
     toast.error(`Failed to submit joining form: ${error.message}`);
@@ -569,8 +575,9 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   type="text"
                   name="nameAsPerAadhar"
                   value={joiningFormData.nameAsPerAadhar}
+                  disabled
                   onChange={handleJoiningInputChange}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50 text-gray-700"
                 />
               </div>
 
@@ -595,8 +602,9 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   type="date"
                   name="dobAsPerAadhar"
                   value={joiningFormData.dobAsPerAadhar}
+                  disabled
                   onChange={handleJoiningInputChange}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50 text-gray-700"
                 />
               </div>
 
@@ -625,8 +633,9 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   type="text"
                   name="department"
                   value={joiningFormData.department}
+                  disabled
                   onChange={handleJoiningInputChange}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50 text-gray-700"
                 />
               </div>
 
@@ -654,8 +663,9 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   type="tel"
                   name="mobileNo"
                   value={joiningFormData.mobileNo}
+                  disabled
                   onChange={handleJoiningInputChange}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50 text-gray-700"
                 />
               </div>
 
@@ -667,8 +677,9 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   type="email"
                   name="personalEmail"
                   value={joiningFormData.personalEmail}
+                  disabled
                   onChange={handleJoiningInputChange}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50 text-gray-700"
                 />
               </div>
 
@@ -706,9 +717,10 @@ const filteredEnquiryData = enquiryData.filter(item => {
                 <textarea
                   name="currentAddress"
                   value={joiningFormData.currentAddress}
+                  disabled
                   onChange={handleJoiningInputChange}
                   rows={3}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50 text-gray-700"
                 />
               </div>
             </div>
@@ -736,8 +748,9 @@ const filteredEnquiryData = enquiryData.filter(item => {
                   type="text"
                   name="designation"
                   value={joiningFormData.designation}
+                  disabled
                   onChange={handleJoiningInputChange}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50 text-gray-700"
                 />
               </div>
 
@@ -763,8 +776,9 @@ const filteredEnquiryData = enquiryData.filter(item => {
                 <input
                   name="aadharCardNo"
                   value={joiningFormData.aadharCardNo}
+                  disabled
                   onChange={handleJoiningInputChange}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-gray-50 text-gray-700"
                 />
               </div>
 
@@ -998,6 +1012,90 @@ const filteredEnquiryData = enquiryData.filter(item => {
           </form>
         </div>
       </div>
+    {/* Success Animation */}
+      {showSuccessAnimation && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 animate-fadeIn">
+          <div className="bg-white rounded-2xl p-8 flex flex-col items-center shadow-2xl animate-scaleIn">
+            <div className="relative">
+              <div className="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center animate-pulse">
+                <svg
+                  className="w-16 h-16 text-green-600 animate-checkmark"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={3}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+              <div className="absolute inset-0 rounded-full border-4 border-green-500 animate-ripple"></div>
+            </div>
+            <h3 className="mt-6 text-2xl font-bold text-gray-800">Success!</h3>
+            <p className="mt-2 text-gray-600 text-center">
+              Employee added successfully
+            </p>
+          </div>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        @keyframes scaleIn {
+          from {
+            transform: scale(0.5);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+        
+        @keyframes checkmark {
+          0% {
+            stroke-dasharray: 0, 100;
+          }
+          100% {
+            stroke-dasharray: 100, 100;
+          }
+        }
+        
+        @keyframes ripple {
+          0% {
+            transform: scale(1);
+            opacity: 1;
+          }
+          100% {
+            transform: scale(1.5);
+            opacity: 0;
+          }
+        }
+        
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+        
+        .animate-scaleIn {
+          animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .animate-checkmark {
+          stroke-dasharray: 100;
+          animation: checkmark 0.6s ease-in-out 0.3s forwards;
+        }
+        
+        .animate-ripple {
+          animation: ripple 1.5s ease-out infinite;
+        }
+      `}</style>
     </div>
   );
 };
