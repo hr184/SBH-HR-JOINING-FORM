@@ -334,6 +334,18 @@ const updateEnquirySheet = async (enquiryNo, timestamp) => {
 
 const handleJoiningSubmit = async (e) => {
   e.preventDefault();
+  
+  // Validate required files
+  if (!joiningFormData.aadharFrontPhoto) {
+    toast.error('Please upload Aadhar card photo');
+    return;
+  }
+  
+  if (!joiningFormData.bankPassbookPhoto) {
+    toast.error('Please upload bank passbook photo');
+    return;
+  }
+  
   setSubmitting(true);
   
   try {
@@ -583,7 +595,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Father Name
+                  Father / Husband Name
                 </label>
                 <input
                   type="text"
@@ -784,49 +796,53 @@ const filteredEnquiryData = enquiryData.filter(item => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Pan Card Number
+                  Pan Card Number *
                 </label>
                 <input
                   name="panCardNumber"
                   value={joiningFormData.panCardNumber || ""} // Ensure it's never null
                   onChange={handleJoiningInputChange}
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
+                  required
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Current Bank Account No
+                  Current Bank Account No *
                 </label>
                 <input
                   name="currentBankAc"
                   value={joiningFormData.currentBankAc}
                   onChange={handleJoiningInputChange}
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
+                  required
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  IFSC Code
+                  IFSC Code *
                 </label>
                 <input
                   name="ifscCode"
                   value={joiningFormData.ifscCode}
                   onChange={handleJoiningInputChange}
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
+                  required
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Branch Name
+                  Branch Name *
                 </label>
                 <input
                   name="branchName"
                   value={joiningFormData.branchName}
                   onChange={handleJoiningInputChange}
                   className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white text-gray-700"
+                  required
                 />
               </div>
             </div>
@@ -835,7 +851,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Aadhar Card
+                  Aadhar Card *
                 </label>
                 <div className="flex items-center space-x-2">
                   <input
@@ -844,6 +860,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
                     onChange={(e) => handleFileChange(e, "aadharFrontPhoto")}
                     className="hidden"
                     id="aadhar-front-upload"
+                    required
                   />
                   <label
                     htmlFor="aadhar-front-upload"
@@ -858,11 +875,16 @@ const filteredEnquiryData = enquiryData.filter(item => {
                     </span>
                   )}
                 </div>
+                {!joiningFormData.aadharFrontPhoto && (
+                  <p className="text-red-500 text-xs mt-1">
+                    required
+                  </p>
+                )}
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Photo Of Front Bank Passbook
+                  Photo Of Front Bank Passbook *
                 </label>
                 <div className="flex items-center space-x-2">
                   <input
@@ -871,6 +893,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
                     onChange={(e) => handleFileChange(e, "bankPassbookPhoto")}
                     className="hidden"
                     id="bank-passbook-upload"
+                    required
                   />
                   <label
                     htmlFor="bank-passbook-upload"
@@ -885,7 +908,13 @@ const filteredEnquiryData = enquiryData.filter(item => {
                     </span>
                   )}
                 </div>
+                {!joiningFormData.bankPassbookPhoto && (
+                  <p className="text-red-500 text-xs mt-1">
+                    required
+                  </p>
+                )}
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Last Salary Slip
@@ -1012,7 +1041,7 @@ const filteredEnquiryData = enquiryData.filter(item => {
           </form>
         </div>
       </div>
-    {/* Success Animation */}
+      {/* Success Animation */}
       {showSuccessAnimation && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 animate-fadeIn">
           <div className="bg-white rounded-2xl p-8 flex flex-col items-center shadow-2xl animate-scaleIn">
